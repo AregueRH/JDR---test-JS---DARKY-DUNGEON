@@ -144,6 +144,7 @@ const app = Vue.createApp({
             partieLancee : false,
             text: " ",
             pv: 200,
+            sacVisible: false,
         };
     },
     
@@ -156,7 +157,39 @@ const app = Vue.createApp({
             squelette: protosquelette.cloner(),
             magicien: protomagicien.cloner(),
         };
-    },
+        },
+
+
+
+
+
+
+
+
+
+
+
+        affichageSac() {
+            this.sacVisible = !this.sacVisible; // Basculer entre visible/invisible
+            
+        },
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         nouvellePartie() {
             this.html = " ",

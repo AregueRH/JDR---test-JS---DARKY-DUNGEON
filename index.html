@@ -21,9 +21,12 @@
                 </div>
 
 
-                <div class="sac">
-                    <label for="btnSac"></label>
-                    <button type="button" name="btnSac" id="idBtnSac">Affaires</button>
+                <button id="toggleButton" v-on:click="affichageSac">Affaires</button>
+                
+                <div id="myDiv" class="sac" v-if="partieLancee" v-show="sacVisible">
+                    <div class="item"><img src="/images/potion.svg" alt="une potion de soin"></div>
+                    <div class="item"><img src="/images/lantern.svg" alt="une lanterne"></div>
+                    <div class="item"><img src="/images/corde.svg" alt="une corde"></div>
                 </div>
             </div>
 
@@ -31,6 +34,19 @@
         </header>
 
         <nav>
+
+            
+
+
+
+
+
+
+
+
+
+
+
 
             <div class="container">
 
