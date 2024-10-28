@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style2.css">
+</head>
+
+<body>
+    <div id="app">
+        
+        <header>
+            <div class="titreJeu">
+                <h2> DARKY DUNGEON </h2>
+            </div>
+            <div class="headerbtn">
+                <div class="nouvellePartie">
+                    <button class="btnNouvellePartie" v-on:click="nouvellePartie"> Nouvelle partie</button>
+                </div>
+
+
+                <div class="sac">
+                    <label for="btnSac"></label>
+                    <button type="button" name="btnSac" id="idBtnSac">Affaires</button>
+                </div>
+            </div>
+
+
+        </header>
+
+        <nav>
+
+            <div class="container">
+
+                <div class="textAffiche">
+                    <p>{{ html }}</p>
+                </div>
+
+            </div>
+
+        <div class="infosCombat" v-if="modeCombat">
+            <p v-html="htmlCombat"></p>
+        </div>
+
+            <div class="btns" v-if="partieLancee">
+                <button v-if="modeCombat" type="submit" class="btnAttBase"
+                    v-on:click="attaqueDeBase">attaque de base</button>
+
+                <button v-if="modeCombat" type="submit" class="btnAttBouclier"
+                    v-on:click="essayerAttaqueBouclier(this.ennemi)">coup du bouclier</button>
+
+                <button v-if="!modeCombat" type="submit" class="btnPasseSalle" v-on:click="compteurSalle()">passer la
+                    salle</button>
+            </div>
+
+            <div class="pvRestants" v-if="partieLancee">
+                <p>Points de vie restants : {{ pv }} PV</p>
+            </div>
+        </nav>
+
+
+
+        <footer>
+
+            <div class="liens">
+                <div class="ReseauxSociaux">
+                    <div></div>
+                    <div class="fb"><a href="">Facebook</a></div>
+                    <div class="twitter"><a href="">X</a></div>
+                    <div class="git"><a href="">Git</a></div>
+                    <div></div>
+                </div>
+                <div class="adressePorteFolio">
+                    <a href="">adressePorteFolio</a>
+                </div>
+            </div>
+
+        </footer>
+
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

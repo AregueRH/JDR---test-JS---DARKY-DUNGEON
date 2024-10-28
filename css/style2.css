@@ -1,0 +1,201 @@
+.titreJeu {
+    color: rgb(189, 6, 76);
+    margin-left: 50px;
+    font-size: 18px;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.nouvellePartie {
+    /* margin-top: 10px; */
+}
+
+.sac, .nouvellePartie {
+    margin-right: 20px;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+p {
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 600px;
+    text-align: justify;
+}
+
+.infosCombat {
+    background-color: #686868;
+    color: rgb(231, 191, 13);
+    text-align: center;
+    /* Centre le texte horizontalement */
+    padding: 10px;
+    margin-top: 20px;
+
+    /* Utilisation de Flexbox pour centrer verticalement et horizontalement */
+    display: flex;
+    /* Active le mode flex */
+    justify-content: center;
+    /* Centre le contenu horizontalement */
+    align-items: center;
+    /* Centre le contenu verticalement */
+    height: 200px;
+}
+.hamburger-menu {
+    display: none;
+    /* Masqué par défaut */
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger-menu .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 4px 0;
+}
+
+.container {
+    flex-grow: 1;
+        /* Ce qui permet au contenu de s'étendre verticalement */
+    width: 100%;
+    /* padding: 20px; */
+    background-color: #e6cccc;
+    overflow-y: auto;
+}
+
+.btns {
+        display: flex;
+            /* Pour aligner les boutons en ligne */
+            justify-content: center;
+            /* Centrer les boutons horizontalement */
+            gap: 10px;
+            /* Espace entre les boutons */
+            margin: 20px 0;
+}
+
+button {
+    margin: 5px;
+    /* Espace autour de chaque bouton */
+    padding: 8px 15px;
+    /* Espace à l'intérieur des boutons */
+    border: none;
+    /* Enlève la bordure par défaut */
+    background-color: rgb(189, 6, 76);
+    /* Couleur d'arrière-plan */
+    color: white;
+    /* Couleur du texte */
+    cursor: pointer;
+    /* Curseur en forme de main */
+    border-radius: 5px;
+    /* Coins arrondis pour les boutons */
+    transition: background-color 0.3s;
+    /* Transition pour un effet au survol */
+}
+
+button:hover {
+    background-color: rgb(255, 102, 102);
+    /* Couleur de fond au survol */
+}
+.btnPasseSalle {
+    justify-content: center;
+    align-items: center;
+}
+footer {
+    background-color: rgb(148, 112, 182);
+        width: 100%;
+        text-align: center;
+        /* padding: 20px; */
+        flex-shrink: 0;
+}
+
+.liens {
+    /* background-color: blanchedalmond; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.ReseauxSociaux {
+    display: flex;
+    margin-bottom: 10px;
+    gap: 20px;
+    justify-content: center;
+}
+
+.fb {
+    /* background-color: rgb(160, 98, 141); */
+}
+
+.twitter {
+    /* background-color: rgb(108, 168, 112); */
+}
+
+.adressePorteFolio {
+    /* background-color: rgb(129, 148, 189); */
+    margin-top: -10px;
+}
+
+.hamburger-menu {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.barre {
+    width: 20px;
+    height: 2px;
+    background-color: yellowgreen;
+}
+
+@media (max-width: 600px) {
+    body {
+        background-color: rgb(55, 111, 129);
+    }
+
+    p {
+        font-size: 16px;
+        /* Réduit la taille du texte pour les tablettes et petits écrans */
+        padding: 8px;
+        /* Réduit le padding */
+        line-height: 1;
+        max-width: 300px;
+    }
+
+    .nouvellePartie,
+    .titreJeu,
+    .sac {
+        display: none;
+        /* Masque les éléments du header */
+    }
+
+    .hamburger-menu {
+        display: flex;
+        /* Affiche le menu hamburger */
+    }
+
+    header {
+        justify-content: center;
+    }
+}
