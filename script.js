@@ -14,7 +14,7 @@ class Personnage {
         const degats = Math.max(0, (this.force + this.lancerDes()) - cible.defense);
         if (degats > 0) {
             cible.pv -= degats;
-            console.log(`${this.nom} inflige ${degats} dégâts à ${cible.nom} ! Il reste ${cible.pv} points de vie à ${cible.nom}`);
+            // console.log(`${this.nom} inflige ${degats} dégâts à ${cible.nom} ! Il reste ${cible.pv} points de vie à ${cible.nom}`);
             vueInstance.htmlCombat += `${this.nom} inflige ${degats} dégâts à ${cible.nom}!  <br> Il reste ${cible.pv} points de vie à ${cible.nom}.  <br>`;
             if (cible instanceof Guerrier) {
                 vueInstance.pv = cible.pv;
@@ -24,6 +24,25 @@ class Personnage {
             vueInstance.htmlCombat += `${cible.nom} bloque totalement l'attaque de ${this.nom}!  <br>`;
         }
     }
+
+    attaqueDuBouclier(cible, vueInstance) {
+        const degats = Math.max(0, (this.force - cible.defense));
+        console.log(`degats = ${degats}`);
+        if (degats > 0) {
+            cible.pv -= degats;
+            if (cible.defense > 3) {
+                cible.defense -= 3;
+            }
+            if (cible.agilite > 2) {
+                cible.agilite -= 2;
+            }
+            vueInstance.htmlCombat += `${cible.nom} a perdu 3 en défense et 2 d'agilité pour le reste du combat ainsi que ${degats} points de vie. Il lui reste ${cible.pv} points de vie. <br>`;
+        } else {
+            vueInstance.htmlCombat += `${cible.nom} parvient à bloquer le coup de bouclier de ${this.nom} !<br>`;
+        }
+    }
+
+// la cible a perdu 3 de défense pour le reste du combat et 2 points de vie.
 
 // cette fonction permet de cloner la "fiche" des personnage à chaque appelle de la fonction. Cela permet de toujours garder une classe non altérée de chaque personnage et d'y refaire appelle.
     cloner() {
@@ -86,43 +105,44 @@ class Personnage {
         vueInstance.modeCombat = false;
     }
 }
+    essayerAttaqueBouclier(cible, vueInstance) {
+        const jetAttaquant = this.agilite + this.lancerDes();
+        const jetDefenseur = this.agilite + this.lancerDes();
 
-    // essayerAttaqueBouclier(cible) {
-    //     // Ajoute un lancer de dés à l'agilité de l'attaquant et du défenseur
-    //     const jetAttaquant = this.agilite + this.lancerDes();
-    //     const jetDefenseur = cible.agilite + cible.lancerDes();
+        vueInstance.htmlCombat = `${this.nom} attaque ${cible.nom} ! <br>`;
+        vueInstance.htmlCombat += `jet d'agilité de ${this.nom} : ${jetAttaquant} <br>`;
+        vueInstance.htmlCombat += `jet d'agilité de ${cible.nom} : ${jetDefenseur} <br>`;
 
-    //     console.log(`${this.nom} attaque ${cible.nom}!`);
-    //     console.log(`Jet d'agilité de ${this.nom}: ${jetAttaquant}`);
-    //     console.log(`Jet d'agilité de ${cible.nom}: ${jetDefenseur}`);
+        if (jetAttaquant > jetDefenseur) {
+            this.attaqueDuBouclier(cible, vueInstance);
+        } else {
+            vueInstance.htmlCombat += `${this.nom} rate de son coup de bouclier ${cible.nom} qui parvient à esquiver l'attaque <br>`;
+        }
 
-    //     // Si l'attaquant dépasse la défense, l'attaque passe
-    //     if (jetAttaquant > jetDefenseur) {
-    //         this.coup_bouclier(cible);
-    //     } else {
-    //         console.log(`${this.nom} rate son attaque contre ${cible.nom}!`);
-    //     }
-    // }
+        if (cible.pv > 0) {
+            vueInstance.htmlCombat += `${cible.nom} contre attaque !?!  `;
+            cible.attaquer(this, vueInstance);
+            if (this.pv > 0) {
+                vueInstance.pv = this.pv;
+            } else {
+                vueInstance.htmlCombat = `Vous avez malheuresement succombé à vos blessures et avez perdu mais rien ne vous empêche de retenter l'aventure !`;
+                vueInstance.partieLancee = false;
+                vueInstance.modeCombat = false;
+            }
+        } else {
+            vueInstance.modeCombat = false;
+        }
+}
+    
+   
 }
 
 class Guerrier extends Personnage {
-    coup_bouclier(cible) {
-        cible.defense = Math.max(0, cible.defense - 5); 
-         //Math.max(a, b) : Cette fonction renvoie le plus grand des deux arguments. Ici, elle compare la valeur de la défense diminuée avec 0.
-         //Si la valeur calculée (cible.defense - 5) est positive ou égale à 0, alors elle est conservée. Par exemple, si la défense est 10, après un coup de bouclier, cela devient 10 - 5 = 5, et la nouvelle défense sera 5.
-         // Si la valeur calculée est négative (comme -2 dans l'exemple précédent), Math.max(0, -2) renverra 0, garantissant que la défense ne descende jamais en dessous de 0.
-        const degats = Math.max(0, (this.force / 2) - cible.defense);
-        if (degats > 0) {
-            cible.pv -= degats;
-            console.log(`${this.nom} inflige ${degats} dégâts à ${cible.nom}! Il reste ${cible.pv} PV à ${cible.nom}`);
-        } else {
-            console.log(`${cible.nom} bloque totalement l'attaque de ${this.nom}!`);
-        }
-    }
+   
 }
 
 // déclaration des personnages du jeu (différentes instances de la classe Personnage)
-const prototypeJoueur_guerrier = new Guerrier("testGuerrier", 200, 25, 25, 25);
+const prototypeJoueur_guerrier = new Guerrier("testGuerrier", 200, 30, 25, 25);
 const prototypeGobelin = new Personnage("gobelin", 40, 22, 22, 22);
 const protosquelette = new Personnage("squelette", 75, 21, 21, 21);
 const protomagicien = new Personnage("magicien", 75, 23, 23, 23);
@@ -145,6 +165,9 @@ const app = Vue.createApp({
             text: " ",
             pv: 200,
             sacVisible: false,
+            potion: false,
+            corde: false,
+            lanterne: false,
         };
     },
     
@@ -159,38 +182,10 @@ const app = Vue.createApp({
         };
         },
 
-
-
-
-
-
-
-
-
-
-
         affichageSac() {
             this.sacVisible = !this.sacVisible; // Basculer entre visible/invisible
-            
         },
 
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
         nouvellePartie() {
             this.html = " ",
             this.joueur = prototypeJoueur_guerrier.cloner();
@@ -206,16 +201,23 @@ const app = Vue.createApp({
             this.salle0();
             this.pvJoueur = this.pv;
             this.pv = 200;
+            this.potion = false;
+            this.corde = false;
+            this.lanterne = false;
         },
 
         lancerCombat() {
             this.modeCombat = true;
             this.htmlCombat += "Le combat commence contre " + this.ennemi.nom + " !<br>";
-            this.joueur.essayerAttaqueSimple(this.ennemi, this);  // Passe l'instance Vue ici
+            // this.joueur.essayerAttaqueSimple(this.ennemi, this);  // Passe l'instance Vue ici
         },
 
         attaqueDeBase() {
             this.joueur.essayerAttaqueSimple(this.ennemi, this);  // Passe l'instance Vue ici aussi
+        },
+
+        attaqueBouclier() {
+            this.joueur.essayerAttaqueBouclier(this.ennemi, this);
         },
 
         compteurSalle() {
@@ -283,12 +285,15 @@ const app = Vue.createApp({
         salle3() {
             this.html = "A peine la creature lâcha son dernier soupir que vous entendez d'autres de ses congénaires dont les pas résonnent dans les murs. Vous parcourez la piece à la recherche d'une sortie et l'espace d'un instant vous retournez vers là où vous est apparue la créature. Un petit passage semble se dessiner dans le coin où se tenait le gobelin. Alors que vous vous précépitez dans le passage de la porte vous manquez de vous tomber dans l'escalier étroit qui semble descendre.";
             this.html += this.text;
+            this.lanterne = true;
 
         },
 
         salle4() {
             this.html = "vous trébuchez et vous retrouvez à terre à l'entrée d'une cave délabrée dont les odeurs de moisissures vous donne la nausée. toutefois un couloir de l'autre côté de la piece. En evitant de glisser sur le sol humide vous parvenez à vous faufiler vers ce qui semble être l'entrée d'un couloir.";
             this.html += this.text;
+            this.potion = true;
+
         },
 
         salle5() {
@@ -302,6 +307,8 @@ const app = Vue.createApp({
         salle6() {
             this.html = "Les ossements retombés au sol semblent avoir été libérés du sort qui les maintenait animés. Reprenant votre chemin, vous realisez que vous êtes grievement blessez. La paroi se fait terreuse et le sol inégal. Votre vue se trouble à mesure que vos pas se font difficiles. Une lumière devant vous semble représentez votre dernier espoir de survivre.";
             this.html += this.text;
+            this.corde = true;
+
         },
 
         salle7() {
@@ -309,6 +316,8 @@ const app = Vue.createApp({
             this.html += this.text;
             this.ennemi = this.ennemis.magicien;
             this.lancerCombat();
+            this.potion = false;
+
         },
 
         salle8() {

@@ -130,7 +130,9 @@ p {
     max-width: 600px;
     text-align: justify;
 }
-
+.textAffiche {
+    margin-left: 50px;
+}
 .infosCombat {
     background-color: #686868;
     color: rgb(231, 191, 13);
