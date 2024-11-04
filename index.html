@@ -21,9 +21,12 @@
                 </div>
 
 
-                <div class="sac">
-                    <label for="btnSac"></label>
-                    <button type="button" name="btnSac" id="idBtnSac">Affaires</button>
+                <button id="toggleButton" v-on:click="affichageSac">Affaires</button>
+                
+                <div id="myDiv" class="sac" v-if="partieLancee" v-show="sacVisible">
+                    <div class="item" v-if="potion"><img src="/images/potion.svg" alt="une potion de soin"></div>
+                    <div class="item" v-if="lanterne"><img src="/images/lantern.svg" alt="une lanterne"></div>
+                    <div class="item" v-if="corde"><img src="/images/corde.svg" alt="une corde"></div>
                 </div>
             </div>
 
@@ -31,6 +34,19 @@
         </header>
 
         <nav>
+
+            
+
+
+
+
+
+
+
+
+
+
+
 
             <div class="container">
 
@@ -49,7 +65,7 @@
                     v-on:click="attaqueDeBase">attaque de base</button>
 
                 <button v-if="modeCombat" type="submit" class="btnAttBouclier"
-                    v-on:click="essayerAttaqueBouclier(this.ennemi)">coup du bouclier</button>
+                    v-on:click="attaqueBouclier">coup du bouclier</button>
 
                 <button v-if="!modeCombat" type="submit" class="btnPasseSalle" v-on:click="compteurSalle()">passer la
                     salle</button>
