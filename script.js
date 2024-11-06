@@ -10,7 +10,7 @@ class Personnage {
 
 // fonction qui compare la force de l'attaquant à la défense de sa cible (joueur ou monstre)
     attaquer(cible, vueInstance) {
-// on s'assure ainsi que les dégâts ne seront soit positifs soit nuls
+        // on s'assure ainsi que les dégâts ne seront soit positifs soit nuls
         const degats = Math.max(0, (this.force + this.lancerDes()) - cible.defense);
         if (degats > 0) {
             cible.pv -= degats;
@@ -18,6 +18,7 @@ class Personnage {
             vueInstance.htmlCombat += `${this.nom} inflige ${degats} dégâts à ${cible.nom}!  <br> Il reste ${cible.pv} points de vie à ${cible.nom}.  <br>`;
             if (cible instanceof Guerrier) {
                 vueInstance.pv = cible.pv;
+                vueInstance.showAndFadeCircles();
             }
         } else {
             console.log(`${cible.nom} bloque totalement l'attaque de ${this.nom}!  <br>`);
@@ -172,6 +173,63 @@ const app = Vue.createApp({
     },
     
     methods: {
+
+
+
+
+
+
+
+
+
+
+
+
+
+        showAndFadeCircles() {
+            // Créer 3 cercles rouges à des positions aléatoires
+            for (let i = 0; i < 3; i++) {
+                const circle = document.createElement('div');
+                circle.classList.add('redCircle');
+
+                // Position aléatoire sur l'écran
+                const randomX = Math.random() * (window.innerWidth - 50);
+                const randomY = Math.random() * (window.innerHeight - 50);
+                circle.style.left = `${randomX}px`;
+                circle.style.top = `${randomY}px`;
+
+                // Ajouter le cercle au document
+                document.body.appendChild(circle);
+
+                // Déclencher la descente et la disparition avec un délai
+                setTimeout(() => {
+                    circle.style.transform = 'translateY(100px)'; // Descend de 100 pixels
+                    circle.style.opacity = '0'; // Disparition progressive
+                }, 100); // Légère attente pour que les cercles apparaissent avant de commencer
+
+                // Retirer le cercle du DOM après l'animation pour libérer de l'espace
+                setTimeout(() => {
+                    circle.remove();
+                }, 4100); // 4s pour l'animation + 100ms de délai
+            }
+        },
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         reinitialiserEnnemis() {
         // Recrée chaque ennemi pour garantir leurs valeurs de base à chaque nouvelle partie

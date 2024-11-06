@@ -15,9 +15,9 @@ header {
     position: relative;
 }
 
-.nouvellePartie {
-    /* margin-top: 10px; */
-}
+/* .nouvellePartie {
+    margin-top: 10px;
+} */
 
 .sac, .nouvellePartie {
     margin-right: 20px;
@@ -31,6 +31,30 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.redCircle {
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    border-radius: 56% 44% 49% 51% / 66% 61% 39% 34%;
+    position: absolute;
+    /* Permet de positionner chaque cercle à des coordonnées spécifiques (left et top)*/
+    opacity: 1;
+    transition: opacity 4s, transform 4s;
+}
+
+
 
 
 
@@ -106,18 +130,6 @@ body {
     margin-bottom: 8px;
     /* Espace entre l'image et le texte */
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 #app {
     display: flex;
@@ -232,19 +244,19 @@ footer {
     gap: 20px;
     justify-content: center;
 }
-
+/* 
 .fb {
-    /* background-color: rgb(160, 98, 141); */
+    background-color: rgb(160, 98, 141);
 }
 
 .twitter {
-    /* background-color: rgb(108, 168, 112); */
+    background-color: rgb(108, 168, 112);
 }
 
 .adressePorteFolio {
-    /* background-color: rgb(129, 148, 189); */
+    background-color: rgb(129, 148, 189);
     margin-top: -10px;
-}
+} */
 
 .hamburger-menu {
     display: flex;
