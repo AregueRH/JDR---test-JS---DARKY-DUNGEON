@@ -1,8 +1,17 @@
-.titreJeu {
-    color: rgb(189, 6, 76);
-    margin-left: 50px;
-    font-size: 18px;
-}
+ .titreJeu {
+     color: rgb(189, 6, 76);
+     /* Rouge initial */
+     margin-left: 50px;
+     font-size: 18px;
+     font-weight: bold;
+     transition: color 0.3s ease-in-out;
+ }
+
+ /* Changer la couleur au survol */
+ .titreJeu:hover {
+     color: rgb(255, 100, 130);
+     /* Rouge plus clair au survol */
+ }
 
 header {
     background-color: #333;
@@ -15,9 +24,9 @@ header {
     position: relative;
 }
 
-/* .nouvellePartie {
-    margin-top: 10px;
-} */
+.sacAffaires {
+    margin-right: 25px;
+}
 
 .sac, .nouvellePartie {
     margin-right: 20px;
@@ -32,17 +41,6 @@ body {
     flex-direction: column;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .redCircle {
     width: 150px;
     height: 150px;
@@ -53,20 +51,6 @@ body {
     opacity: 1;
     transition: opacity 4s, transform 4s;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .sac {
     display: flex;
@@ -218,10 +202,12 @@ button:hover {
     background-color: rgb(255, 102, 102);
     /* Couleur de fond au survol */
 }
+
 .btnPasseSalle {
     justify-content: center;
     align-items: center;
 }
+
 footer {
     background-color: rgb(148, 112, 182);
         width: 100%;

@@ -68,7 +68,7 @@ class Personnage {
     // console.log(`Jet d'agilité de ${this.nom}: ${jetAttaquant}`);
     // console.log(`Jet d'agilité de ${cible.nom}: ${jetDefenseur}`);
 
-    // Met à jour la div 'htmlCombat' via l'instance Vue 
+    // Met à jour la div 'htmlCombat' en passant par l'instance Vue 
     vueInstance.htmlCombat = `${this.nom} attaque ${cible.nom}! <br>`;
     vueInstance.htmlCombat += `Jet d'agilité de ${this.nom}: ${jetAttaquant} <br>`;
     vueInstance.htmlCombat += `Jet d'agilité de ${cible.nom}: ${jetDefenseur} <br>`;
@@ -147,10 +147,12 @@ const prototypeJoueur_guerrier = new Guerrier("testGuerrier", 200, 30, 25, 25);
 const prototypeGobelin = new Personnage("gobelin", 40, 22, 22, 22);
 const protosquelette = new Personnage("squelette", 75, 21, 21, 21);
 const protomagicien = new Personnage("magicien", 75, 23, 23, 23);
+const protomegamagicien = new Personnage("Maître magicien", 95, 25, 25, 23);
 let gobelin = prototypeGobelin.cloner(); 
 let joueur_guerrier = prototypeJoueur_guerrier.cloner();
 let squelette = protosquelette.cloner();
 let magicien = protomagicien.cloner();
+let megamagicien = protomegamagicien.cloner();
 
 // déclaration des méthodes de l'application, toutes les fonctions que l'on souhaite appeler de l'extérieur d'une intance de classe.
 const app = Vue.createApp({
@@ -162,7 +164,8 @@ const app = Vue.createApp({
             joueur: joueur_guerrier,
             ennemi: gobelin,
             modeCombat: false,
-            partieLancee : false,
+            partieLancee: false,
+            modeChoix: false,
             text: " ",
             pv: 200,
             sacVisible: false,
@@ -173,18 +176,6 @@ const app = Vue.createApp({
     },
     
     methods: {
-
-
-
-
-
-
-
-
-
-
-
-
 
         showAndFadeCircles() {
             // Créer 3 cercles rouges à des positions aléatoires
@@ -213,23 +204,6 @@ const app = Vue.createApp({
                 }, 4100); // 4s pour l'animation + 100ms de délai
             }
         },
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         reinitialiserEnnemis() {
         // Recrée chaque ennemi pour garantir leurs valeurs de base à chaque nouvelle partie
@@ -237,6 +211,7 @@ const app = Vue.createApp({
             gobelin: prototypeGobelin.cloner(),
             squelette: protosquelette.cloner(),
             magicien: protomagicien.cloner(),
+            megamagicien: protomegamagicien.cloner(),
         };
         },
 
@@ -256,6 +231,7 @@ const app = Vue.createApp({
             this.htmlCombat = " ";
             this.modeCombat = false;
             this.partieLancee = true;
+            this.modeChoix = false;
             this.salle0();
             this.pvJoueur = this.pv;
             this.pv = 200;
@@ -283,6 +259,14 @@ const app = Vue.createApp({
             this.passerSalle();
             this.htmlCombat = " "; 
             // cela permet d'effacer le texte de combat en passant d'une salle à l'autre
+        },
+
+        compteurSalleAlt() {
+            this.compteurAvancement++;
+            this.compteurAvancement++;
+            this.compteurAvancement++;
+            this.passerSalle();
+            this.htmlCombat = " ";
         },
 
         passerSalle() {
@@ -314,6 +298,18 @@ const app = Vue.createApp({
                 case 8:
                     this.salle8();
                     break;
+                case 9:
+                    this.salle9();
+                    break;
+                case 11:
+                    this.salle11();
+                    break;
+                case 12:
+                    this.salle12();
+                    break;
+                case 13:
+                    this.sallefinale();
+                    break;
                 
                 default:
                     console.log('Traitement par défaut');
@@ -324,6 +320,7 @@ const app = Vue.createApp({
         salle0() {
             this.html = "Vous vous réveillez dans une cage et désarmé tandis que des torches éclairent faiblement la piece de leurs ombres lugubres. Un simple regard autour de vous trahi les ambitions hostiles de votre tortionnaire à votre regard. Peu importe qui vous a ammené là , vous devez vous enfuir! En constatant la rouille qui a rongé certains barreaux vous les frappez de toute vos forces. C'est alors qu'après le 3eme coup, votre coeur s'embale en entendant les barres tomber au sol. Vous pouvez sortir de la cage et de cet endroit effroyable !";
             this.html += this.text;
+            this.passeSalle = "Passer à la salle suivante";
             // console.log(joueur_guerrier instanceof Guerrier);  // Doit afficher true
             // console.log(typeof joueur_guerrier.essayerAttaqueSimple);  // Doit afficher 'function'
             // console.log(this.ennemi instanceof Personnage);
@@ -341,21 +338,24 @@ const app = Vue.createApp({
         },
 
         salle3() {
-            this.html = "A peine la creature lâcha son dernier soupir que vous entendez d'autres de ses congénaires dont les pas résonnent dans les murs. Vous parcourez la piece à la recherche d'une sortie et l'espace d'un instant vous retournez vers là où vous est apparue la créature. Un petit passage semble se dessiner dans le coin où se tenait le gobelin. Alors que vous vous précépitez dans le passage de la porte vous manquez de vous tomber dans l'escalier étroit qui semble descendre.";
+            this.html = "A peine la creature lâcha son dernier soupir que vous entendez d'autres de ses congénaires dont les pas résonnent dans les murs. Vous parcourez la piece à la recherche d'une sortie et l'espace d'un instant vous retournez vers là où vous est apparue la créature. Vous récupérez une lanterne qui semblait appartenir au gobeline et éclairez la pièce. Un petit passage semble se dessiner dans le coin où se tenait le gobelin. Alors que vous vous précépitez dans le passage de la porte vous manquez de vous tomber dans l'escalier étroit qui semble descendre. ";
             this.html += this.text;
             this.lanterne = true;
 
         },
 
         salle4() {
-            this.html = "vous trébuchez et vous retrouvez à terre à l'entrée d'une cave délabrée dont les odeurs de moisissures vous donne la nausée. toutefois un couloir de l'autre côté de la piece. En evitant de glisser sur le sol humide vous parvenez à vous faufiler vers ce qui semble être l'entrée d'un couloir.";
+            this.html = "vous trébuchez et vous retrouvez à terre à l'entrée d'une cave délabrée dont les odeurs de moisissures vous donne la nausée. Toutefois un couloir se dessine de l'autre côté de la piece. En evitant de glisser sur le sol humide vous appercevez un passage dissimulé d'où semble s'engoufrer d'étranges lueurs. Quel chemin préférez-vous suivre? ";
             this.html += this.text;
-            this.potion = true;
+            this.choix1 = "couloir";
+            this.choix2 = "passage dissimulé";
+            this.modeChoix = true;
 
         },
 
         salle5() {
             this.html = "Vous vous engouffrez dans le couloir qui ouvre vers un dédale où l'odeur de pourriture se fait inssuportable. Alors même que vous décidez de revenir sur vos pas, vous entendez un cliqueti irrégulier venir de derriere vous. Au bout de quelques instant il vous semble dicerner des bandelettes flottantes. Vous realisez qu'il s'agit d'ossements animés par une force inconnue. Des ossements tranchants recouvrent la créature qui se dirige déjà vers vous.";
+            this.modeChoix = false;
             this.html += this.text;
             this.ennemi = this.ennemis.squelette;
             this.lancerCombat();
@@ -363,26 +363,60 @@ const app = Vue.createApp({
         },
 
         salle6() {
-            this.html = "Les ossements retombés au sol semblent avoir été libérés du sort qui les maintenait animés. Reprenant votre chemin, vous realisez que vous êtes grievement blessez. La paroi se fait terreuse et le sol inégal. Votre vue se trouble à mesure que vos pas se font difficiles. Une lumière devant vous semble représentez votre dernier espoir de survivre.";
+            this.html = "Les ossements retombés au sol semblent avoir été libérés du sort qui les maintenait animés. Reprenant votre chemin, vous realisez que vous êtes grievement blessez. La paroi se fait terreuse et le sol inégal. Votre vue se trouble à mesure que vos pas se font difficiles.  Une lumière devant vous semble représentez votre dernier espoir de survivre.";
             this.html += this.text;
-            this.corde = true;
+            this.compteurAvancement++;
 
         },
 
         salle7() {
-            this.html = "La lumière n'était pas un délire, elle semble venir d'une caverne au bout du dédalle. Au moment où vous y entrez vous voyez un être décharné mais dont les yeux brillent dans la lumiere des torches et qui se retourne désormais sur vous. Ses mains commencent à crépiter d'une énergie étrangement violette et bleu.";
+            this.html = "La lumière n'était pas un délire, elle semble venir d'une caverne au bout du dédalle. Un reflet de lumiere attire votre regard. Il s'agît d'une fiole qui à l'odeur semble être rempli d'un liquide inflammable. Vous la rangez dans votre sac. Au moment où vous entrez dans ces ruines vous voyez un être décharné mais dont les yeux brillent dans la lumiere des torches et qui se retourne désormais sur vous. Ses mains commencent à crépiter d'une énergie étrangement violette et bleu.";
+            this.corde = true;
+            this.modeChoix = false;
             this.html += this.text;
             this.ennemi = this.ennemis.magicien;
             this.lancerCombat();
-            this.potion = false;
-
         },
 
         salle8() {
-            this.html = "Malgré votre acharnement vous finissez par lâcher votre arme qui tombe à vos pied. Vous tombez à votre tour, vos dernières forces vous quittes. Votre vue se trouble et les sons se font de plus en plus lointains. Mais quelques instants plus tard , la créature murmure quelque chose à votre oreille. Sans en avoir conscience, le regard vide, vous vous relevez tandis que la chose retourne à ses occupations. La créatures semble vous avoir dès lors accueilli à son service pour le reste de votre éternité...";
+            this.html = "Malgré vos blessures vous continuez d'avancer coûte que coûte et vous vous convainquez que la sortie n'est pas loin. Une légere brise vous fait penser que votre calvaire est bientôt terminé. Vous trouvez une corde en assez bon état que vous rangez dans votre sac, ùais à peine avez-vous un timide sourire qui tend votre fisage fatigué et las, que vous voyez une porte lourde face à vous. En tirant dessus vous entendez avec soulagement qu'elle n'est pas vérouillée. Toutefois elle semble s'ouvrir sur un couloir dont les extrêmités semblent donner chacune sur une porte. Laquelle choisisez vous ? ";
+            this.corde = true;
+            this.choix1 = "porte de gauche";
+            this.choix2 = "porte de droite";
+            this.modeChoix = true;
+        },
+
+        salle9() {
+            this.html = "Vous poussez délicatement la porte et remarquez avec stupeur que vous êtes dos à quelqu'un qui penché sur son bureau semble manipuler le contenu des fioles à l'aide d'une flamme et d'incantations inquiétantes. Vous tentez de vous glisser discrétement derriere lui mais vous marchez sur ce qui semble être une page de parchemin dont le frotement au sol fait se retourner le mage qui se retourne en sursaut. Par réflexe vous lui jetez la fiole qui au contacte du feu explose et blesse le mage mais déjà ses yeux crépitent de magie. Il tend ses mains vers vous et vous attaque avec un sort.";
+            this.modeChoix = false;
+            this.potion = false;
             this.html += this.text;
+            this.ennemi = this.ennemis.megamagicien;
+            this.ennemi.pv -= 30;
+            this.lancerCombat();
+            this.compteurAvancement++;
+            this.compteurAvancement++;
+        },
+
+        salle11() {
+            this.html = "A peine avez-vous commencez à pousser la porte que vous entendez une voix sinistre s'écrier de rage à votre vue tandis que quelquechose explose à vos pied et vous empêche d'attaquer. Vous faites face à un mage qui vous regarde avec toute la gravité de la situation mais déjà ses yeux crépitent de magie. Il tend ses mains vers vous et vous attaque avec un sort.";
+            this.html += this.text;
+            this.ennemi = this.ennemis.megamagicien;
+            this.joueur.pv -= 30;
+            this.lancerCombat();
+        },
+
+        salle12() {
+            this.html = "Alors que le corp désormais sans vie du puissant mage semble se consumer dans des flemmes bleux et vertes vous vous appercevez que cette piece donne sur un rebord de fenêtre. En passant la tête vous ppercevez une passage à seulement quelques mètres qui vous permettraient de vous enfuir de ce donjon. ";
+            this.passeSalle = "utiliser la corde";
+        },
+
+        sallefinale() {
+            this.partieLancee = false;
+            this.html = "Merci d'avoir essayé mon jeu test en VueJS. J'espère qu'il vous a plut, n'hésitez pas à le refaire ou en récupérer le code ! =) "
         },
         
+
     mounted() {
         this.passerSalle();
     }

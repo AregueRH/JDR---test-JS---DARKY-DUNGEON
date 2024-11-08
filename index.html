@@ -21,7 +21,7 @@
                 </div>
 
 
-                <button id="toggleButton" v-on:click="affichageSac">Affaires</button>
+                <button id="toggleButton" class="sacAffaires" v-on:click="affichageSac">Sac d'affaires</button>
                 
                 <div id="myDiv" class="sac" v-if="partieLancee" v-show="sacVisible">
                     <div class="item" v-if="potion"><img src="/images/potion.svg" alt="une potion de soin"></div>
@@ -34,14 +34,6 @@
         </header>
 
         <nav>
-
-
-
-
-
-
-
-
 
             <div class="container">
 
@@ -62,8 +54,9 @@
                 <button v-if="modeCombat" type="submit" class="btnAttBouclier"
                     v-on:click="attaqueBouclier">coup du bouclier</button>
 
-                <button v-if="!modeCombat" type="submit" class="btnPasseSalle" v-on:click="compteurSalle()">passer la
-                    salle</button>
+                <button v-if="!modeCombat && !modeChoix"  type="submit" class="btnPasseSalle" v-on:click="compteurSalle()">{{ passeSalle }}</button>
+                <button v-if="!modeCombat && modeChoix" type="submit" class="btnPasseSalle" v-on:click="compteurSalle()"> {{ choix1 }} </button>
+                <button v-if="!modeCombat && modeChoix" type="submit" class="btnPasseSalle" v-on:click="compteurSalleAlt()"> {{ choix2 }} </button>
             </div>
 
             <div class="pvRestants" v-if="partieLancee">
